@@ -4,9 +4,9 @@ metadata:
   name: tomcat
   namespace: apps
 spec:
-  type: ClusterIP
   selector:
     app: tomcat
   ports:
-  - port: 80
-    targetPort: 8080
+    - name: http
+      port: 80          # what ingress talks to
+      targetPort: 8080  # what tomcat listens on
