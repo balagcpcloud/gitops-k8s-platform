@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tomcat
+  namespace: apps
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: nginx.apps.lab
+    http:
+      paths:
+      - path: /tomcat
+        pathType: Prefix
+        backend:
+          service:
+            name: tomcat
+            port:
+              number: 80
