@@ -16,6 +16,9 @@ spec:
         alertmanager:
           enabled: false
 
+        kubeStateMetrics:
+          enabled: true
+
         pushgateway:
           enabled: false
 
@@ -24,10 +27,7 @@ spec:
 
         prometheus-node-exporter:
           enabled: false
-
-        kubeStateMetrics:
-          enabled: true
-
+          
         server:
           enabled: true
 
@@ -49,7 +49,7 @@ spec:
             enabled: false
 
           retention: 7d
-          
+
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
