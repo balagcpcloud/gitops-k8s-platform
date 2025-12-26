@@ -11,10 +11,10 @@ spec:
   - host: tomcat.apps.lab
     http:
       paths:
-      - path: /tomcat
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: tomcat
             port:
-              number: 80
+              number: 8080
