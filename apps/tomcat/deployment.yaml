@@ -13,8 +13,15 @@ spec:
       labels:
         app: tomcat
     spec:
+      volumes:
+      - name: tomcat-root
+        configMap:
+          name: tomcat-root-app
       containers:
       - name: tomcat
         image: tomcat:10.1-jdk17
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - name: tomcat-root
+          mountPath: /usr/local/tomcat/webapps/ROOT
