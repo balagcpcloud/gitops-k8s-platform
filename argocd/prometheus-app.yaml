@@ -14,7 +14,31 @@ spec:
       releaseName: prometheus
       values: |
         alertmanager:
-          enabled: false
+          enabled: true
+
+        server:
+          enabled: true
+
+          service:
+            type: ClusterIP
+
+          ingress:
+            enabled: true
+            ingressClassName: nginx
+            annotations:
+              nginx.ingress.kubernetes.io/rewrite-target: /
+            hosts:
+              - prometheus.apps.lab
+            paths:
+              - /
+
+          persistentVolume:
+            enabled: false
+
+          retention: 7d
+
+        kubeStateMetrics:
+          enabled: true
 
         pushgateway:
           enabled: false
@@ -24,16 +48,6 @@ spec:
 
         prometheus-node-exporter:
           enabled: false
-
-        kubeStateMetrics:
-          enabled: true
-
-        server:
-          enabled: true
-          service:
-            type: ClusterIP
-          persistentVolume:
-            enabled: false
 
   destination:
     server: https://kubernetes.default.svc
