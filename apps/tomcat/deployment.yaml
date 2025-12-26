@@ -22,6 +22,9 @@ spec:
         - name: root-app
           mountPath: /usr/local/tomcat/webapps/ROOT/index.jsp
           subPath: index.jsp
+        - name: root-app
+          mountPath: /usr/local/tomcat/webapps/ROOT/WEB-INF/web.xml
+          subPath: web.xml
       volumes:
       - name: root-app
         configMap:
