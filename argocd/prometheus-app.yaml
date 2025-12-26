@@ -16,8 +16,14 @@ spec:
         server:
           service:
             type: ClusterIP
+          persistentVolume:
+            enabled: false
+          retention: 7d
 
         alertmanager:
+          enabled: true
+
+        kubeStateMetrics:
           enabled: true
 
         pushgateway:
