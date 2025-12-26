@@ -16,12 +16,12 @@ spec:
       containers:
       - name: tomcat
         image: tomcat:10.1-jdk17
-        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
         volumeMounts:
         - name: root-app
-          mountPath: /usr/local/tomcat/webapps/ROOT
+          mountPath: /usr/local/tomcat/webapps/ROOT/index.jsp
+          subPath: index.jsp
       volumes:
       - name: root-app
         configMap:

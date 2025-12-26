@@ -5,9 +5,11 @@ metadata:
   namespace: apps
 data:
   index.jsp: |
+    <%@ page contentType="text/html;charset=UTF-8" %>
     <html>
+      <head><title>Tomcat GitOps</title></head>
       <body>
-        <h1>Tomcat running via Argo CD + Ingress</h1>
-        <p>GitOps setup is working ✅</p>
+        <h1>Tomcat ROOT app is working ✅</h1>
+        <p>Served via Argo CD + Ingress</p>
       </body>
     </html>
