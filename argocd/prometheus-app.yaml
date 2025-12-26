@@ -12,8 +12,29 @@ spec:
     targetRevision: 27.52.0
     helm:
       releaseName: prometheus
-      valueFiles:
-        - monitoring/prometheus/values.yaml
+      values: |
+        alertmanager:
+          enabled: true
+
+        server:
+          enabled: true
+          service:
+            type: ClusterIP
+          persistentVolume:
+            enabled: false
+          retention: 7d
+
+        kubeStateMetrics:
+          enabled: true
+
+        pushgateway:
+          enabled: false
+
+        nodeExporter:
+          enabled: false
+
+        prometheus-node-exporter:
+          enabled: false
 
   destination:
     server: https://kubernetes.default.svc
