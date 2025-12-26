@@ -13,17 +13,11 @@ spec:
     helm:
       releaseName: prometheus
       valueFiles:
-        - values.yaml
+        - monitoring/prometheus/values.yaml
 
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
-
-  ignoreDifferences:
-    - group: apps
-      kind: DaemonSet
-      name: prometheus-prometheus-node-exporter
-      namespace: monitoring
 
   syncPolicy:
     automated:
