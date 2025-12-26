@@ -1,17 +1,12 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: tomcat-root-app
+  name: tomcat-root
   namespace: apps
 data:
-  index.html: |
-    <!DOCTYPE html>
+  index.jsp: |
     <html>
-    <head>
-      <title>Tomcat via GitOps</title>
-    </head>
     <body>
-      <h1>✅ Tomcat is running via Ingress</h1>
-      <p>Deployed using Argo CD + GitOps</p>
+      <h1>Tomcat is running via Argo CD + Ingress</h1>
     </body>
     </html>
