@@ -23,8 +23,8 @@ spec:
         pushgateway:
           enabled: true
 
-        nodeExporter:
-          enabled: false   # REQUIRED for Docker Desktop / WSL2
+        prometheus-node-exporter:
+          enabled: false
 
   destination:
     server: https://kubernetes.default.svc
