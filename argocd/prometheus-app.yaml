@@ -23,6 +23,9 @@ spec:
         pushgateway:
           enabled: true
 
+        nodeExporter:
+          enabled: false
+
         prometheus-node-exporter:
           enabled: false
 
