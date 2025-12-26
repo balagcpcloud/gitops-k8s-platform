@@ -40,10 +40,8 @@ spec:
             annotations:
               nginx.ingress.kubernetes.io/rewrite-target: /
             hosts:
-              - host: prometheus.apps.lab
-                paths:
-                  - path: /
-                    pathType: Prefix
+              - prometheus.apps.lab
+            path: /
 
           persistentVolume:
             enabled: false
