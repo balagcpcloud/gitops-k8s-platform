@@ -1,0 +1,20 @@
+alertmanager:
+  enabled: true
+
+server:
+  service:
+    type: ClusterIP
+
+  persistentVolume:
+    enabled: false
+
+  retention: 7d
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
+
+pushgateway:
+  enabled: false
