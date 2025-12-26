@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: nginx.apps.lab
+  - host: tomcat.apps.lab
     http:
       paths:
       - path: /tomcat
