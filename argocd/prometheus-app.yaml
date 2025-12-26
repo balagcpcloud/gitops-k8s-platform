@@ -27,7 +27,7 @@ spec:
 
         prometheus-node-exporter:
           enabled: false
-          
+
         server:
           enabled: true
 
@@ -40,10 +40,10 @@ spec:
             annotations:
               nginx.ingress.kubernetes.io/rewrite-target: /
             hosts:
-              - prometheus.apps.lab
-            paths:
-              - /
-            pathType: Prefix
+              - host: prometheus.apps.lab
+                paths:
+                  - path: /
+                    pathType: Prefix
 
           persistentVolume:
             enabled: false
