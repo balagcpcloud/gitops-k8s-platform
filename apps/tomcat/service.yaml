@@ -3,10 +3,18 @@ kind: Service
 metadata:
   name: tomcat
   namespace: apps
+  labels:
+    app: tomcat
 spec:
   selector:
     app: tomcat
   ports:
+    # Application traffic (Ingress → Tomcat)
     - name: http
-      port: 80          # what ingress talks to
-      targetPort: 8080  # what tomcat listens on
+      port: 80
+      targetPort: 8080
+
+    # JVM / JMX metrics (Prometheus)
+    - name: jmx
+      port: 9404
+      targetPort: 9404
