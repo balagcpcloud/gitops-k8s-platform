@@ -1,0 +1,60 @@
+apiVersion: v1
+data:
+  apiToken: ZHQwYzAxLkVWN1pMVFQzM0ZQWlhUUDIzTVNFUjRDQS5GN1AzUUlGNDRaM1Y2RU5aT0c2SlpXWTU3UFZNWUczMkszVFc3SlVSTjNKV0oyRVlST0U3Q1ZaT0JPQk1CVDZY
+  dataIngestToken: ZHQwYzAxLjNPUTJGNVdUT0dSRk9ITkpVSVY0RFlOQi4zSllPR09EV1JLQllYS0U2V1dNN042TFVOSURETUFOS0FJNzRVWk1CVFhEVVBEVlg0VEVRM040UVdKT05HU1FI
+kind: Secret
+metadata:
+  name: lab-k8s-docker-desktop
+  namespace: dynatrace
+  labels:
+    dynatrace.com/created-by: "dynatrace.kubernetes"
+type: Opaque
+---
+apiVersion: dynatrace.com/v1beta5
+kind: DynaKube
+metadata:
+  name: lab-k8s-docker-desktop
+  namespace: dynatrace
+  labels:
+    dynatrace.com/created-by: "dynatrace.kubernetes"
+  annotations:
+    feature.dynatrace.com/k8s-app-enabled: "true"
+# Link to api reference for further information: https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/reference/dynakube-parameters
+spec:
+  apiUrl: https://egk00257.live.dynatrace.com/api
+  metadataEnrichment:
+    enabled: true
+  oneAgent:
+    cloudNativeFullStack:
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+  activeGate:
+    capabilities:
+      - routing
+      - kubernetes-monitoring
+      - debugging
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1.5Gi
+      limits:
+        cpu: 1000m
+        memory: 1.5Gi
+  templates:
+    otelCollector:
+      imageRef:
+        repository: public.ecr.aws/dynatrace/dynatrace-otel-collector
+        tag: latest
+  logMonitoring: {}
+  telemetryIngest:
+    protocols:
+      - jaeger
+      - otlp
+      - statsd
+      - zipkin
+    serviceName: telemetry-ingest
