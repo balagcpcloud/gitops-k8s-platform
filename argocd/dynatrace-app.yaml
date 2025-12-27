@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dynatrace
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/balagcpcloud/gitops-k8s-platform
+    targetRevision: main
+    path: dynatrace
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dynatrace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
