@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tomcat-jmx-config
+  namespace: apps
+data:
+  jmx-config.yaml: |
+    startDelaySeconds: 0
+    ssl: false
+    lowercaseOutputName: true
+    lowercaseOutputLabelNames: true
+    rules:
+      - pattern: "java.lang<type=Memory><>(HeapMemoryUsage|NonHeapMemoryUsage)"
+      - pattern: "java.lang<type=GarbageCollector,name=(.+)><>CollectionCount"
+      - pattern: "java.lang<type=GarbageCollector,name=(.+)><>CollectionTime"
+      - pattern: "java.lang<type=Threading><>ThreadCount"

@@ -13,19 +13,63 @@ spec:
       labels:
         app: tomcat
     spec:
+
+      # --- Init container: download JMX exporter ---
+      initContainers:
+        - name: download-jmx-agent
+          image: curlimages/curl:8.5.0
+          command:
+            - sh
+            - -c
+            - |
+              curl -L -o /jmx/jmx_prometheus_javaagent.jar \
+              https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.20.0/jmx_prometheus_javaagent-0.20.0.jar
+          volumeMounts:
+            - name: jmx-agent
+              mountPath: /jmx
+
       containers:
-      - name: tomcat
-        image: tomcat:10.1-jdk17
-        ports:
-        - containerPort: 8080
-        volumeMounts:
-        - name: root-app
-          mountPath: /usr/local/tomcat/webapps/ROOT/index.jsp
-          subPath: index.jsp
-        - name: root-app
-          mountPath: /usr/local/tomcat/webapps/ROOT/WEB-INF/web.xml
-          subPath: web.xml
+        - name: tomcat
+          image: tomcat:10.1-jdk17
+
+          # --- JVM metrics agent ---
+          env:
+            - name: JAVA_OPTS
+              value: >
+                -javaagent:/opt/jmx/jmx_prometheus_javaagent.jar=9404:/etc/jmx/jmx-config.yaml
+
+          ports:
+            - containerPort: 8080
+            - containerPort: 9404   # JMX metrics
+
+          volumeMounts:
+            # --- Application config (EXISTING) ---
+            - name: root-app
+              mountPath: /usr/local/tomcat/webapps/ROOT/index.jsp
+              subPath: index.jsp
+            - name: root-app
+              mountPath: /usr/local/tomcat/webapps/ROOT/WEB-INF/web.xml
+              subPath: web.xml
+
+            # --- JMX config ---
+            - name: jmx-config
+              mountPath: /etc/jmx
+
+            # --- JMX agent jar ---
+            - name: jmx-agent
+              mountPath: /opt/jmx
+
       volumes:
-      - name: root-app
-        configMap:
-          name: tomcat-root-app
+        # Existing app config
+        - name: root-app
+          configMap:
+            name: tomcat-root-app
+
+        # New JMX config
+        - name: jmx-config
+          configMap:
+            name: tomcat-jmx-config
+
+        # Shared volume for agent jar
+        - name: jmx-agent
+          emptyDir: {}
