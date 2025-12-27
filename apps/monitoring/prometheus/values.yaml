@@ -1,5 +1,0 @@
-nodeExporter:
-  enabled: true
-
-kubeStateMetrics:
-  enabled: true
